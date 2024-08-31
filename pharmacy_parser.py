@@ -88,9 +88,9 @@ while(availability_of_the_next_page):
 
 driver.quit()
 
-wb=ox.Workbook()
+wb = ox.load_workbook('F:\Education\Python parser\SiteParser\parsing.xlsx')
 ws = wb.worksheets[0]
-ws.cell(row=1, column=6).value = "Название" 
+ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
-    ws.cell(row=i+2, column=6).value = statN 
-wb.save('doctors.xlsx')
+    ws.cell(row=i+2, column=9).value = statN 
+wb.save('parsing.xlsx')
