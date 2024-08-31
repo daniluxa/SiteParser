@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup as bs
 import requests
 import openpyxl as ox
-from twocaptcha import TwoCaptcha
 import time
 from selenium import webdriver
 
