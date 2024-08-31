@@ -93,4 +93,7 @@ ws = wb.worksheets[0]
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
     ws.cell(row=i+2, column=9).value = statN 
+ws.cell(row=1, column=10).value = "Цена" 
+for i, statN in enumerate(pharm_price): 
+    ws.cell(row=i+2, column=10).value = statN 
 wb.save('parsing.xlsx')
