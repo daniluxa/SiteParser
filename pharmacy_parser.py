@@ -22,10 +22,12 @@ pharm_price = []
 url = 'https://lekopttorg.ru/catalog/'
 availability_of_the_next_page = True
 
-catalog_name = ['lekarstva_i_profilakticheskie_sredstva/']
+catalog_name = ['lekarstva_i_profilakticheskie_sredstva', 'krasota_ukhod_i_gigiena','meditsinskie_tovary', 'meditsinskaya_tekhnika','planirovanie_semi', 'fitopreparaty','mama_i_malysh','zdorovoe_pitanie'
+                ,'optika_i_kontaktnaya_korrektsiya','redkie_preparaty', 'upakovka_new','lechebnoe_pitanie', 'prostyni_i_pelenki_vpityvayushchie']
+catalog_name_cnt = 0
 page_num = 1
 
-new_url = f"{url}/{catalog_name[0]}/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
+new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
 
 driver = webdriver.Chrome()
 
@@ -82,9 +84,11 @@ while(availability_of_the_next_page):
     status = soup.find("div", class_="arrow__right")
     if status != None:
         page_num += 1
-        new_url = f"{url}/{catalog_name[0]}/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
-    else:
+        new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
+    elif catalog_name_cnt == len(catalog_name) - 1:
         availability_of_the_next_page = False
+    else:
+        catalog_name_cnt += 1
 
 driver.quit()
 
