@@ -58,6 +58,7 @@ driver.quit()
 
 wb = ox.load_workbook('parsing.xlsx')
 ws = wb.worksheets[0]
+#ws.delete_cols(9)
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
     ws.cell(row=i+2, column=9).value = statN
