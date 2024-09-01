@@ -59,7 +59,8 @@ while(availability_of_the_next_page):
          pharm_name.append(data.text)
          
     for data in tmp_pharm_price:
-         pharm_price.append(data.text)
+        amper_index = str(data.text).find('&')
+        pharm_price.append(data.text[:amper_index])
     ##status = soup.find("span", class_="b-pagination-vuetify-imitation__item b-pagination-vuetify-imitation__item_next b-pagination-vuetify-imitation__item_disabled")
 
     if page_num < last_page:
@@ -72,7 +73,7 @@ while(availability_of_the_next_page):
 
 driver.quit()
 
-wb = ox.load_workbook('C:\python\parsing\parsing_ozerki.xlsx')
+wb = ox.load_workbook('parsing_ozerki.xlsx')
 ws = wb.worksheets[0]
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
