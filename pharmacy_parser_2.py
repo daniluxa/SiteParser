@@ -32,7 +32,8 @@ catalog_name = ['lekarstva-ot-prostudy-i-grippa', 'preparaty-dlya-pishchevaritel
                 'dermakosmetika-uhod-za-licom','dermakosmetika-dlya-detej','dermakosmetika-dlya-muzhchin','solnce']
 
 catalog_name_cnt = 0 
-page_num = 1 
+page_num = 99
+last_page = -1
 
 new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
 
@@ -47,6 +48,10 @@ while(availability_of_the_next_page):
 
     soup = bs(page, "html.parser")
 
+    if(last_page == -1):
+        count_of_find_pages = soup.find_all("a", class_="AppRouterLink_link__uudGk sc-b9a2ebac-0 cpVAFQ")  # извлекаем кол-во страниц 
+        last_page = int(count_of_find_pages[-1].text)
+
     tmp_pharm_name = soup.find_all("a", class_="AppRouterLink_link__uudGk sc-128b053f-1 pvICS product-name")  # извлекаем название 
     tmp_pharm_price = soup.find_all("div", class_="product-price__base-price")  # извлекаем цену
 
@@ -56,11 +61,12 @@ while(availability_of_the_next_page):
     for data in tmp_pharm_price:
          pharm_price.append(data.text)
     ##status = soup.find("span", class_="b-pagination-vuetify-imitation__item b-pagination-vuetify-imitation__item_next b-pagination-vuetify-imitation__item_disabled")
-    status = soup.find("svg", class_="sc-adb9b8f4-0 hKNQCg undefined app-icon-sprite__chevron_right-icon")
-    if status != None:
+
+    if page_num < last_page:
         page_num += 1
-        catalog_name_cnt += 1
         new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
+    elif catalog_name_cnt <= len(catalog_name):
+        catalog_name_cnt += 1
     else:
         availability_of_the_next_page = False
 
