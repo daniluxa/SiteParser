@@ -36,18 +36,23 @@ while(availability_of_the_next_page):
     tmp_pharm_price = soup.find_all("span", class_="price__regular")  # извлекаем цену
 
     for data in tmp_pharm_name:
-        pharm_name.append(str(data.text).replace(' ', '').replace('\n', ''))
+        data = data.text.replace('\n', '')
+        tmp = ' '.join(data.split())
+        pharm_name.append(tmp)
          
     for data in tmp_pharm_price:
-        pharm_price.append(data.text.replace(' ', '').replace('\n', ''))
+        data = data.text.replace('\n', '')
+        tmp = ' '.join(data.split())
+        pharm_price.append(tmp)
 
     ##status = soup.find("span", class_="b-pagination-vuetify-imitation__item b-pagination-vuetify-imitation__item_next b-pagination-vuetify-imitation__item_disabled")
     status = soup.find("div", class_="arrow__right")
+    availability_of_the_next_page = False
     if status != None:
         page_num += 1
         new_url = f"{url}/catalog/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
     else:
-         availability_of_the_next_page = False
+        availability_of_the_next_page = False
 
 driver.quit()
 
