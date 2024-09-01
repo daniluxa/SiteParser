@@ -8,26 +8,18 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-# Doctors_Name = []
-# Doctors_Spec = []
-# Doctors_Categoria  = []
-# Doctors_Experience = []
-# Doctors_Clinic = []
-# Doctors_Address = []  
-
-
 pharm_name = []
 pharm_price = []
 
-url = 'https://lekopttorg.ru/catalog/'
+url = 'https://lekopttorg.ru'
 availability_of_the_next_page = True
 
-catalog_name = ['lekarstva_i_profilakticheskie_sredstva', 'krasota_ukhod_i_gigiena','meditsinskie_tovary', 'meditsinskaya_tekhnika','planirovanie_semi', 'fitopreparaty','mama_i_malysh','zdorovoe_pitanie'
-                ,'optika_i_kontaktnaya_korrektsiya','redkie_preparaty', 'upakovka_new','lechebnoe_pitanie', 'prostyni_i_pelenki_vpityvayushchie']
-catalog_name_cnt = 0
+#catalog_name = ['lekarstva_i_profilakticheskie_sredstva', 'krasota_ukhod_i_gigiena','meditsinskie_tovary', 'meditsinskaya_tekhnika','planirovanie_semi', 'fitopreparaty','mama_i_malysh','zdorovoe_pitanie'
+#                ,'optika_i_kontaktnaya_korrektsiya','redkie_preparaty', 'upakovka_new','lechebnoe_pitanie', 'prostyni_i_pelenki_vpityvayushchie']
+#catalog_name_cnt = 0
 page_num = 1
 
-new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
+new_url = f"{url}/catalog/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
 
 driver = webdriver.Chrome()
 
@@ -42,38 +34,6 @@ while(availability_of_the_next_page):
     tmp_pharm_name = soup.find_all("a", class_="product__title mb-8 title title_block")  # извлекаем название 
     tmp_pharm_price = soup.find_all("span", class_="price__regular")  # извлекаем цену
 
-    # tmp_Doctors_Spec       = soup.find_all("div", class_="b-doctor-card__spec")  # извлекаем Специфику
-    # tmp_Doctors_Categoria  = soup.find_all("div", class_="b-doctor-card__category")  # извлекаем Опыт
-    # tmp_Doctors_Experience = soup.find_all("div", class_="b-doctor-card__experience-years")  # извлекаем Стаж
-    # tmp_Doctors_Clinic     = soup.find_all("span", class_="b-select__trigger-main-text")  # извлекаем Больницу
-    # tmp_Doctors_Address    = soup.find_all("span", class_="b-select__trigger-adit-text")  # извлекаем адрес больницы
-
-    # for data in tmp_Doctors_Name:
-    #     Doctors_Name.append(data.text)
-
-    # for data in tmp_Doctors_Spec:
-    #     data = data.text.replace('\n', '')
-    #     tmp = ' '.join(data.split())
-    #     Doctors_Spec.append(tmp)
-
-    # for data in tmp_Doctors_Categoria:
-    #     Doctors_Categoria.append(data.text)
-
-    # for data in tmp_Doctors_Experience:
-    #     data = data.text.replace('\n', '')
-    #     tmp = ' '.join(data.split())
-    #     tmp = tmp[5::]
-    #     Doctors_Experience.append(tmp)
-
-    # for data in tmp_Doctors_Clinic:
-    #     data = data.text.replace('\n', '')
-    #     tmp = ' '.join(data.split())
-    #     Doctors_Clinic.append(tmp)
-    # for data in tmp_Doctors_Address:
-    #     data = data.text.replace('\n', '')
-    #     tmp = ' '.join(data.split())
-    #     Doctors_Address.append(tmp)
-
     for data in tmp_pharm_name:
          pharm_name.append(data.text)
          
@@ -84,11 +44,12 @@ while(availability_of_the_next_page):
     status = soup.find("div", class_="arrow__right")
     if status != None:
         page_num += 1
-        new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
-    elif catalog_name_cnt == len(catalog_name) - 1:
+        #new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
+        new_url = f"{url}/catalog/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
+    #elif catalog_name_cnt == len(catalog_name) - 1:
         availability_of_the_next_page = False
     else:
-        catalog_name_cnt += 1
+         availability_of_the_next_page = False
 
 driver.quit()
 
