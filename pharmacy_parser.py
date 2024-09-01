@@ -1,3 +1,4 @@
+import string
 import requests
 from bs4 import BeautifulSoup as bs
 import requests
@@ -35,29 +36,26 @@ while(availability_of_the_next_page):
     tmp_pharm_price = soup.find_all("span", class_="price__regular")  # извлекаем цену
 
     for data in tmp_pharm_name:
-         pharm_name.append(data.text)
+        pharm_name.append(str(data.text).replace(' ', '').replace('\n', ''))
          
     for data in tmp_pharm_price:
-         pharm_price.append(data.text)
+        pharm_price.append(data.text.replace(' ', '').replace('\n', ''))
 
     ##status = soup.find("span", class_="b-pagination-vuetify-imitation__item b-pagination-vuetify-imitation__item_next b-pagination-vuetify-imitation__item_disabled")
     status = soup.find("div", class_="arrow__right")
     if status != None:
         page_num += 1
-        #new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
         new_url = f"{url}/catalog/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
-    #elif catalog_name_cnt == len(catalog_name) - 1:
-        availability_of_the_next_page = False
     else:
          availability_of_the_next_page = False
 
 driver.quit()
 
-wb = ox.load_workbook('F:\Education\Python parser\SiteParser\parsing.xlsx')
+wb = ox.load_workbook('parsing.xlsx')
 ws = wb.worksheets[0]
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
-    ws.cell(row=i+2, column=9).value = statN 
+    ws.cell(row=i+2, column=9).value = statN
 ws.cell(row=1, column=10).value = "Цена" 
 for i, statN in enumerate(pharm_price): 
     ws.cell(row=i+2, column=10).value = statN 
