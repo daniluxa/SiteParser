@@ -47,7 +47,6 @@ while(availability_of_the_next_page):
 
     ##status = soup.find("span", class_="b-pagination-vuetify-imitation__item b-pagination-vuetify-imitation__item_next b-pagination-vuetify-imitation__item_disabled")
     status = soup.find("div", class_="arrow__right")
-    availability_of_the_next_page = False
     if status != None:
         page_num += 1
         new_url = f"{url}/catalog/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
