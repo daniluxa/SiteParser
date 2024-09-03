@@ -21,15 +21,7 @@ catalog_name = ['lekarstva-ot-prostudy-i-grippa', 'preparaty-dlya-pishchevaritel
                 'preparaty-dlya-kostno-myshechnoj-sistemy','preparaty-dlya-mochepolovoj-sistemy','preparaty-dlya-zreniya-i-sluha','preparaty-pri-allergii',
                 'preparaty-dlya-lecheniya-ehndokrinnoj-sistemy','preparaty-pri-zabolevaniyah-krovi', 'preparaty-dlya-lecheniya-infekcij',
                 'onkologiya-i-immunologiya','sredstva-ot-varikoza','preparaty-pri-zabolevaniyah-legkih','preparaty-dlya-borby-s-vrednymi-privychkami','preparaty-ot-parazitov',
-                'bazovaya-fitoterapiya','gomeopaticheskie-sredstva','vakciny-i-syvorotki', 'mass-market','lechebnaya-i-selektivnaya-kosmetika', 'predmety-detskoj-gigieny','predmety-uhoda-dlya-detej',
-                'tovary-dlya-beremennyh-i-kormyashchih','detskoe-pitanie','detskie-igrushki', 'produkty-pitaniya-obshchego-naznacheniya','funkcionalnoe-pitanie','sportivnoe-pitanie', 
-                'medicinskaya-tehnika','perevyazochnye-sredstva','diagnosticheskie-test-sistemy','sredstva-uhoda-za-bolnymi',
-                'izdeliya-medicinskie','funkcionalnoe-bele','ortopedicheskie-predmety','aptechki',
-                'sredstva-dlya-uhoda-za-linzami-i-ochkami','linzy-kontaktnye','okklyudery','lupy','opravy','aksessuary-dlya-optiki','ochki',
-                'dermakosmetika-uhod-za-volosami','chuvstvitelnaya-kozha-i-allergiya','dermakosmetika-antivozrastnoj-uhod',
-                'dermakosmetika-zashchita-ot-solnca','dermakosmetika-problemnaya-kozha','vypadenie-i-perhot',
-                'dermakosmetika-uvlazhnenie-i-pitanie', 'dermakosmetika-atopiya','dermakosmetika-uhod-za-telom','dermakosmetika-ochishchenie',
-                'dermakosmetika-uhod-za-licom','dermakosmetika-dlya-detej','dermakosmetika-dlya-muzhchin','solnce']
+                'bazovaya-fitoterapiya','gomeopaticheskie-sredstva','vakciny-i-syvorotki']
 
 catalog_name_cnt = 0 
 page_num = 99
