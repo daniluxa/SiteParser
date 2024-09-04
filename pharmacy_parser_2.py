@@ -24,7 +24,7 @@ catalog_name = ['lekarstva-ot-prostudy-i-grippa', 'preparaty-dlya-pishchevaritel
                 'bazovaya-fitoterapiya','gomeopaticheskie-sredstva','vakciny-i-syvorotki']
 
 catalog_name_cnt = 0 
-page_num = 99
+page_num = 1
 last_page = -1
 
 new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
@@ -60,6 +60,8 @@ while(availability_of_the_next_page):
         new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
     elif catalog_name_cnt <= len(catalog_name):
         catalog_name_cnt += 1
+        page_num += 1
+        new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
     else:
         availability_of_the_next_page = False
 
