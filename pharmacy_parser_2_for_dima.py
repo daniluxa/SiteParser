@@ -15,7 +15,7 @@ url = 'https://ozerki.ru/sankt-peterburg/catalog'
 availability_of_the_next_page = True
 
 catalog_name = ['lekarstva-ot-prostudy-i-grippa', 'preparaty-dlya-pishchevaritelnogo-trakta','preparaty-dlya-serdechno-sosudistoj-sistemy', 
-                'preparaty-pri-boleznyah-nervnoj-sistemy','planirovanie_semi', 'fitopreparaty','mama_i_malysh','zdorovoe_pitanie','vitaminy-i-obmen-veshchestv',
+                'preparaty-pri-boleznyah-nervnoj-sistemy','vitaminy-i-obmen-veshchestv',
                 'preparaty-dlya-lecheniya-zabolevanij-kozhi', 'sredstva-ot-boli-vospaleniya-temperatury','ginekologicheskie-preparaty', 
                 'preparaty-dlya-kostno-myshechnoj-sistemy','preparaty-dlya-mochepolovoj-sistemy','preparaty-dlya-zreniya-i-sluha','preparaty-pri-allergii',
                 'preparaty-dlya-lecheniya-ehndokrinnoj-sistemy','preparaty-pri-zabolevaniyah-krovi', 'preparaty-dlya-lecheniya-infekcij',
