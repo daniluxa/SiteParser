@@ -8,7 +8,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-
 pharm_name = []
 pharm_price = []
 
@@ -29,8 +28,11 @@ last_page = -1
 
 new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
 
-driver = webdriver.Chrome()
+service = Service(executable_path='./chromedriver.exe')
+options = webdriver.ChromeOptions()
+driver = webdriver.Chrome(service=service, options=options)
 
+#driver = webdriver.Chrome()
 
 while(availability_of_the_next_page):
     driver.get(new_url)
@@ -60,7 +62,8 @@ while(availability_of_the_next_page):
         new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
     elif catalog_name_cnt <= len(catalog_name):
         catalog_name_cnt += 1
-        page_num += 1
+        page_num = 1
+        last_page = -1
         new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
     else:
         availability_of_the_next_page = False
