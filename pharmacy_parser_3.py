@@ -21,11 +21,11 @@ catalog_name_cnt = 0
 page_num = 1
 last_page = -1
 
-new_url = f"{url}?page_code={catalog_name[catalog_name_cnt]}"
+new_url = f"{url}?alpha_code={catalog_name[catalog_name_cnt]}"
 
-service = Service(executable_path='./geckodriver.exe')
-options = webdriver.FirefoxOptions()
-driver = webdriver.Firefox(options=options)
+service = Service(executable_path='./chromedriver.exe')
+options = webdriver.ChromeOptions()
+driver = webdriver.Chrome(service=service, options=options)
 
 while(availability_of_the_next_page):
     driver.get(new_url)
@@ -34,6 +34,10 @@ while(availability_of_the_next_page):
     page = driver.page_source
 
     soup = bs(page, "html.parser")
+
+    if(last_page == -1):
+        count_of_find_pages = soup.find_all("span", class_="page")  # извлекаем кол-во страниц 
+        last_page = int(count_of_find_pages[-1].text)
 
     tmp_pharm_name = soup.find_all("div", class_="cell name")  # извлекаем название 
     tmp_pharm_price = soup.find_all("div", class_="cell pricefull")  # извлекаем цену
