@@ -15,13 +15,13 @@ pharm_price = []
 url = 'https://www.acmespb.ru/pharma/oz17'
 availability_of_the_next_page = True
 
-catalog_name = ['a', 'b']
+catalog_name = ['a']
 
 catalog_name_cnt = 0
 page_num = 1
 last_page = -1
 
-new_url = f"{url}/?alpha_code={catalog_name[catalog_name_cnt]}"
+new_url = f"{url}?page_code={catalog_name[catalog_name_cnt]}"
 
 service = Service(executable_path='./geckodriver.exe')
 options = webdriver.FirefoxOptions()
@@ -48,18 +48,16 @@ while(availability_of_the_next_page):
         tmp = ' '.join(data.split())
         pharm_price.append(tmp)
 
-    ##status = soup.find("span", class_="b-pagination-vuetify-imitation__item b-pagination-vuetify-imitation__item_next b-pagination-vuetify-imitation__item_disabled")
     if page_num < last_page:
         page_num += 1
-        new_url = f"{url}/?alpha_code="
+        new_url = f"{url}"
     elif catalog_name_cnt <= len(catalog_name):
         catalog_name_cnt += 1
         page_num = 1
         last_page = -1
-        new_url = f"{url}/?alpha_code="
+        new_url = f"{url}"
     else:
         availability_of_the_next_page = False
-
 driver.quit()
 
 wb = ox.load_workbook('parsing_acm.xlsx')
