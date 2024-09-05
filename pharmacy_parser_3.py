@@ -15,13 +15,13 @@ pharm_price = []
 url = 'https://www.acmespb.ru/pharma/oz17'
 availability_of_the_next_page = True
 
-catalog_name = ['А', 'Б']
+catalog_name = ['a', 'b']
 
 catalog_name_cnt = 0
 page_num = 1
 last_page = -1
 
-new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?alpha_code={page_num}"
+new_url = f"{url}/?alpha_code={catalog_name[catalog_name_cnt]}"
 
 service = Service(executable_path='./geckodriver.exe')
 options = webdriver.FirefoxOptions()
@@ -51,12 +51,12 @@ while(availability_of_the_next_page):
     ##status = soup.find("span", class_="b-pagination-vuetify-imitation__item b-pagination-vuetify-imitation__item_next b-pagination-vuetify-imitation__item_disabled")
     if page_num < last_page:
         page_num += 1
-        new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?alpha_code={page_num}"
+        new_url = f"{url}/?alpha_code="
     elif catalog_name_cnt <= len(catalog_name):
         catalog_name_cnt += 1
         page_num = 1
         last_page = -1
-        new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?alpha_code={page_num}"
+        new_url = f"{url}/?alpha_code="
     else:
         availability_of_the_next_page = False
 
