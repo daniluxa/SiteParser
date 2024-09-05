@@ -8,6 +8,7 @@ import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
 pharm_name = []
 pharm_price = []
@@ -18,7 +19,7 @@ availability_of_the_next_page = True
 catalog_name = ['a']
 
 catalog_name_cnt = 0
-page_num = 1
+page_cnt = 0
 last_page = -1
 
 new_url = f"{url}?alpha_code={catalog_name[catalog_name_cnt]}"
@@ -37,7 +38,7 @@ while(availability_of_the_next_page):
 
     if(last_page == -1):
         count_of_find_pages = soup.find_all("span", class_="page")  # извлекаем кол-во страниц 
-        last_page = int(count_of_find_pages[-1].text)
+        last_page = int(count_of_find_pages[-1].text) - 2
 
     tmp_pharm_name = soup.find_all("div", class_="cell name")  # извлекаем название 
     tmp_pharm_price = soup.find_all("div", class_="cell pricefull")  # извлекаем цену
@@ -52,16 +53,23 @@ while(availability_of_the_next_page):
         tmp = ' '.join(data.split())
         pharm_price.append(tmp)
 
-    if page_num < last_page:
-        page_num += 1
-        new_url = f"{url}"
-    elif catalog_name_cnt <= len(catalog_name):
+    button = driver.find_elements(By.CLASS_NAME, "page")
+    if(page_cnt > last_page):
+        print("Последняя страница")  
+        page_cnt = 0
         catalog_name_cnt += 1
-        page_num = 1
-        last_page = -1
-        new_url = f"{url}"
+
+        if catalog_name_cnt <= len(catalog_name):
+            catalog_name_cnt += 1
+            last_page = -1
+            new_url = f"{url}"
+        else:
+            availability_of_the_next_page = False
     else:
-        availability_of_the_next_page = False
+        button[page_cnt].click()
+        page_cnt += 1
+        time.sleep(5)
+
 driver.quit()
 
 wb = ox.load_workbook('parsing_acm.xlsx')
