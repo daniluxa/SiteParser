@@ -84,8 +84,14 @@ while(availability_of_the_next_page):
 
 driver.quit()
 
+try:
+    wb = ox.load_workbook('parsing_acm.xlsx')
+except:
+    wb = ox.Workbook('parsing_acm.xlsx')
+    wb.save('parsing_acm.xlsx')
+    
 wb = ox.load_workbook('parsing_acm.xlsx')
-ws = wb.worksheets[0]
+ws = wb.active
 #ws.delete_cols(9)
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
@@ -94,3 +100,4 @@ ws.cell(row=1, column=10).value = "Цена"
 for i, statN in enumerate(pharm_price): 
     ws.cell(row=i+2, column=10).value = statN 
 wb.save('parsing_acm.xlsx')
+
