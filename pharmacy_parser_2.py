@@ -74,7 +74,12 @@ while(availability_of_the_next_page):
 
 driver.quit()
 
-wb = ox.load_workbook('parsing_ozerki.xlsx')
+try:
+    wb = ox.load_workbook('parsing_ozerki.xlsx')
+except:
+    wb = ox.Workbook('parsing_ozerki.xlsx')
+    wb.save('parsing_ozerki.xlsx')
+
 ws = wb.worksheets[0]
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
