@@ -16,7 +16,8 @@ pharm_price = []
 url = 'https://www.acmespb.ru/pharma/oz17'
 availability_of_the_next_page = True
 
-catalog_name = ['a']
+catalog_name = ['a', 'b', 'v', 'g', 'd', 'e', 'zh', 'z', 'i', 'y', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 
+                's', 't', 'u', 'f', 'kh', 'ts', 'ch', 'sh', 'sch', 'ye', 'yu', 'ya', '09', 'az']
 
 catalog_name_cnt = 0
 page_cnt = 2
@@ -41,11 +42,10 @@ while(availability_of_the_next_page):
 
     if(last_page == -1):
         count_of_find_pages = soup.find_all("span", class_="page")  # извлекаем кол-во страниц 
-        last_page = int(count_of_find_pages[-1].text)
-        #buttons = driver.find_element(By.XPATH, F"/html/body/div[2]/div/div[1]/div[2]/div[3]/div/div[3]/p/span[{2}]")
-        #                                          /html/body/div[2]/div/div[1]/div[2]/div[3]/div/div[5]/p[2]/span[3]
-        #                                          /html/body/div[2]/div/div[1]/div[2]/div[3]/div/div[5]/p[2]/span[3]
-        #                                          /html/body/div[2]/div/div[1]/div[2]/div[3]/div/div[5]/p[2]/span[3]
+        try:
+            last_page = int(count_of_find_pages[-1].text)
+        except:
+            last_page = 0
 
     tmp_pharm_name = soup.find_all("div", class_="cell name")  # извлекаем название 
     tmp_pharm_price = soup.find_all("div", class_="cell pricefull")  # извлекаем цену
@@ -64,24 +64,23 @@ while(availability_of_the_next_page):
 
     #page_cnt = 2
     
-    button = driver.find_element(By.XPATH, F"/html/body/div[2]/div/div[1]/div[2]/div[3]/div/div[5]/p[2]/span[{page_cnt}]")
-    
-    if(page_cnt > last_page):
-        print("Последняя страница")  
-        page_cnt = 2
-        catalog_name_cnt += 1
+    try:
+        button = driver.find_element(By.XPATH, F"/html/body/div[2]/div/div[1]/div[2]/div[3]/div/div[5]/p[2]/span[{page_cnt}]")
+    except:
+        button = None
 
-        if catalog_name_cnt >= len(catalog_name):
-            catalog_name_cnt += 1
-            last_page = -1
-            page_cnt = 2
-            new_url = f"{url}"
-        else:
-            availability_of_the_next_page = False
-    else:
-        button.click()
+    if page_cnt < last_page:
+        button = driver.find_element(By.XPATH, F"/html/body/div[2]/div/div[1]/div[2]/div[3]/div/div[5]/p[2]/span[{page_cnt}]")
         page_cnt += 1
-        time.sleep(5)
+        button.click()
+    elif catalog_name_cnt < len(catalog_name) - 1:
+        catalog_name_cnt += 1
+        page_cnt = 2
+        last_page = -1
+        new_url = f"{url}?alpha_code={catalog_name[catalog_name_cnt]}"
+        driver.get(new_url)
+    else:
+        availability_of_the_next_page = False
 
 driver.quit()
 
