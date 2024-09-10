@@ -28,9 +28,9 @@ last_page = -1
 
 new_url = f"{url}/{catalog_name[catalog_name_cnt]}/?page={page_num}"
 
-service = Service(executable_path='./chromedriver.exe')
-options = webdriver.ChromeOptions()
-driver = webdriver.Chrome(service=service, options=options)
+service = Service(executable_path='./geckodriver.exe')
+options = webdriver.FirefoxOptions()
+driver = webdriver.Firefox(options=options)
 
 #driver = webdriver.Chrome()
 
@@ -44,7 +44,11 @@ while(availability_of_the_next_page):
 
     if(last_page == -1):
         count_of_find_pages = soup.find_all("a", class_="AppRouterLink_link__uudGk sc-b9a2ebac-0 cpVAFQ")  # извлекаем кол-во страниц 
-        last_page = int(count_of_find_pages[-1].text)
+        try:
+            last_page = int(count_of_find_pages[-1].text)
+        except:
+            last_page = 0
+            catalog_name_cnt = 999  # костыль
 
     tmp_pharm_name = soup.find_all("a", class_="AppRouterLink_link__uudGk sc-128b053f-1 pvICS product-name")  # извлекаем название 
     tmp_pharm_price = soup.find_all("div", class_="product-price__base-price")  # извлекаем цену
