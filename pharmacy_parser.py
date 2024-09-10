@@ -8,6 +8,7 @@ import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
 pharm_name = []
 pharm_price = []
@@ -18,14 +19,24 @@ availability_of_the_next_page = True
 #catalog_name = ['lekarstva_i_profilakticheskie_sredstva', 'krasota_ukhod_i_gigiena','meditsinskie_tovary', 'meditsinskaya_tekhnika','planirovanie_semi', 'fitopreparaty','mama_i_malysh','zdorovoe_pitanie'
 #                ,'optika_i_kontaktnaya_korrektsiya','redkie_preparaty', 'upakovka_new','lechebnoe_pitanie', 'prostyni_i_pelenki_vpityvayushchie']
 #catalog_name_cnt = 0
-page_num = 1
+page_num = 0
 
 new_url = f"{url}/catalog/?by=1000%2Fpage%3D5&PAGEN_3={page_num}"
 
-driver = webdriver.Chrome()
+service = Service(executable_path='./geckodriver.exe')
+options = webdriver.FirefoxOptions()
+driver = webdriver.Firefox(options=options)
 
 while(availability_of_the_next_page):
     driver.get(new_url)
+
+    try:
+        button = driver.find_element(By.XPATH, F'//*[@id="popup-window"]/div/div/button')
+    except:
+        button = None
+
+    if button != None:
+        button.click()
 
     # Получаем HTML-код страницы
     page = driver.page_source
@@ -55,8 +66,15 @@ while(availability_of_the_next_page):
 
 driver.quit()
 
-wb = ox.load_workbook('parsing.xlsx')
-ws = wb.worksheets[0]
+try:
+    wb = ox.load_workbook('parsing_lenopttorg.xlsx')
+except:
+    wb = ox.Workbook('parsing_lenopttorg.xlsx')
+    wb.save('parsing_lenopttorg.xlsx')
+
+wb = ox.load_workbook('parsing_lenopttorg.xlsx')
+ws = wb.active
+
 #ws.delete_cols(9)
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
@@ -64,4 +82,4 @@ for i, statN in enumerate(pharm_name):
 ws.cell(row=1, column=10).value = "Цена" 
 for i, statN in enumerate(pharm_price): 
     ws.cell(row=i+2, column=10).value = statN 
-wb.save('parsing.xlsx')
+wb.save('parsing_lenopttorg.xlsx')

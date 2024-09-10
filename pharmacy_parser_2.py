@@ -80,7 +80,9 @@ except:
     wb = ox.Workbook('parsing_ozerki.xlsx')
     wb.save('parsing_ozerki.xlsx')
 
-ws = wb.worksheets[0]
+wb = ox.load_workbook('parsing_lenopttorg.xlsx')
+ws = wb.active
+
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
     ws.cell(row=i+2, column=9).value = statN 

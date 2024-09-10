@@ -92,6 +92,7 @@ except:
     
 wb = ox.load_workbook('parsing_acm.xlsx')
 ws = wb.active
+
 #ws.delete_cols(9)
 ws.cell(row=1, column=9).value = "Название" 
 for i, statN in enumerate(pharm_name): 
