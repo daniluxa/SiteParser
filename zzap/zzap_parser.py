@@ -118,30 +118,33 @@ def add_new_companies_with_check(part_number, file_path, company_names, prices, 
         prices_col = 3
         phones_col = 4
         
-        # Сначала получаем существующие компании для этой детали
-        existing_companies = []
+        # Собираем ВСЕ существующие компании из всего столбца 2
+        all_existing_companies = set()
+        
+        for row in range(1, ws.max_row + 1):
+            company = ws.cell(row=row, column=companies_col).value
+            if company and str(company).strip():
+                all_existing_companies.add(str(company).strip())
+        
+        print(f"Всего компаний в таблице: {len(all_existing_companies)}")
+        print(f"Существующие компании: {list(all_existing_companies)}")
+        
+        # Находим блок для текущей детали
         start_row = None
         end_row = None
         
-        # Находим блок и собираем существующие компании
         for row in range(1, ws.max_row + 1):
             current_part = ws.cell(row=row, column=part_numbers_col).value
             
             if str(current_part) == str(part_number):
                 start_row = row
-                # Собираем существующие компании
+                # Ищем конец блока
                 current_check_row = row + 1
                 while current_check_row <= ws.max_row:
                     next_part = ws.cell(row=current_check_row, column=part_numbers_col).value
-                    company = ws.cell(row=current_check_row, column=companies_col).value
-                    
                     if next_part is not None and str(next_part).strip() != "":
                         end_row = current_check_row
                         break
-                    
-                    if company and str(company).strip():
-                        existing_companies.append(str(company).strip())
-                    
                     current_check_row += 1
                 
                 if end_row is None:
@@ -152,15 +155,15 @@ def add_new_companies_with_check(part_number, file_path, company_names, prices, 
             print(f"Номер детали '{part_number}' не найден")
             return False
         
-        print(f"Существующие компании: {existing_companies}")
+        print(f"Блок для детали {part_number}: строки {start_row}-{end_row-1}")
         
-        # Фильтруем только новые компании
+        # Фильтруем только новые компании (которых нет во всей таблице)
         new_company_names = []
         new_prices = []
         new_phones = []
         
         for i in range(len(company_names)):
-            if company_names[i] not in existing_companies:
+            if company_names[i] not in all_existing_companies:
                 new_company_names.append(company_names[i])
                 new_prices.append(prices[i])
                 new_phones.append(phones[i])
@@ -171,7 +174,9 @@ def add_new_companies_with_check(part_number, file_path, company_names, prices, 
             print("Нет новых компаний для добавления")
             return True
         
-        # Добавляем новые данные
+        print(f"Новые компании для добавления: {new_company_names}")
+        
+        # Добавляем новые данные в блок текущей детали
         current_row = start_row + 1  # начинаем с первой строки после номера детали
         
         # Если текущая строка уже занята, ищем первую свободную
@@ -275,6 +280,6 @@ def main():
     driver.quit()
 
 if __name__ == "__main__":
-    print("⭐ Запуск скрипта напрямую")
+    print("Запуск скрипта напрямую")
     main()
-    print("🏁 Конец выполнения скрипта")
+    print("Конец выполнения скрипта")
